@@ -1,5 +1,7 @@
 <script setup>
 import Card from './Card.vue'
+import Pagination from './Pagination.vue'
+import { ref } from 'vue'
 
 defineProps({
   items: Array,
@@ -7,6 +9,18 @@ defineProps({
 })
 
 const emit = defineEmits(['addToFavorite', 'addToCart'])
+
+
+
+// Установите начальное количество товаров на странице и текущую страницу
+const itemsPerPage = 4
+const currentPage = ref(1)
+
+
+// Метод для обработки события изменения страницы
+const handlePageChange = (newPage) => {
+  currentPage.value = newPage
+}
 </script>
 
 <template>
@@ -22,6 +36,11 @@ const emit = defineEmits(['addToFavorite', 'addToCart'])
       :onClickAdd="isFavorites ? null : () => emit('addToCart', item)"
       :isFavorite="item.isFavorite"
       :isAdded="item.isAdded"
+    />
+    <Pagination
+      :items-per-page="itemsPerPage"
+      :current-page="currentPage"
+      @page-changed="handlePageChange"
     />
   </div>
 </template>

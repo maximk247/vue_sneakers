@@ -39,12 +39,12 @@ const addToFavorite = async (item) => {
 
       item.isFavorite = true
 
-      const { data } = await axios.post(`https://604781a0efa572c1.mokky.dev/favorites`, obj)
+      const { data } = await axios.post(`https://158f69488853fed3.mokky.dev/favorites`, obj)
 
       item.favoriteId = data.id
     } else {
       item.isFavorite = false
-      await axios.delete(`https://604781a0efa572c1.mokky.dev/favorites/${item.favoriteId}`)
+      await axios.delete(`https://158f69488853fed3.mokky.dev/favorites/${item.favoriteId}`)
       item.favoriteId = null
     }
   } catch (err) {
@@ -54,7 +54,7 @@ const addToFavorite = async (item) => {
 
 const fetchFavorites = async () => {
   try {
-    const { data: favorites } = await axios.get(`https://604781a0efa572c1.mokky.dev/favorites`)
+    const { data: favorites } = await axios.get(`https://158f69488853fed3.mokky.dev/favorites`)
 
     items.value = items.value.map((item) => {
       const favorite = favorites.find((favorite) => favorite.item_id === item.id)
@@ -84,7 +84,7 @@ const fetchItems = async () => {
       params.title = `*${filters.searchQuery}*`
     }
 
-    const { data } = await axios.get(`https://604781a0efa572c1.mokky.dev/items`, {
+    const { data } = await axios.get(`https://158f69488853fed3.mokky.dev/items`, {
       params
     })
 
@@ -123,29 +123,31 @@ watch(filters, fetchItems)
 </script>
 
 <template>
-  <div class="flex justify-between items-center">
-    <h2 class="text-3xl font-bold mb-8">Все кроссовки</h2>
+  <div>
+    <div class="flex justify-between items-center">
+      <h2 class="text-3xl font-bold mb-8">Все кроссовки</h2>
 
-    <div class="flex gap-4">
-      <select @change="onChangeSelect" class="py-2 px-3 border rounded-md outline-none">
-        <option value="name">По названию</option>
-        <option value="price">По цене (дешевые)</option>
-        <option value="-price">По цене (дорогие)</option>
-      </select>
+      <div class="flex gap-4">
+        <select @change="onChangeSelect" class="py-2 px-3 border rounded-md outline-none">
+          <option value="name">По названию</option>
+          <option value="price">По цене (дешевые)</option>
+          <option value="-price">По цене (дорогие)</option>
+        </select>
 
-      <div class="relative">
-        <img class="absolute left-4 top-3" src="/search.svg" />
-        <input
-          @input="onChangeSearchInput"
-          class="border rounded-md py-2 pl-11 pr-4 outline-none focus:border-gray-400"
-          type="text"
-          placeholder="Поиск..."
-        />
+        <div class="relative">
+          <img class="absolute left-4 top-3" src="/search.svg" />
+          <input
+            @input="onChangeSearchInput"
+            class="border rounded-md py-2 pl-11 pr-4 outline-none focus:border-gray-400"
+            type="text"
+            placeholder="Поиск..."
+          />
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="mt-10">
-    <CardList :items="items" @add-to-favorite="addToFavorite" @add-to-cart="onClickAddPlus" />
+    <div class="mt-10">
+      <CardList :items="items" @add-to-favorite="addToFavorite" @add-to-cart="onClickAddPlus" />
+    </div>
   </div>
 </template>

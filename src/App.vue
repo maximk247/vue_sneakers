@@ -4,7 +4,6 @@ import { ref, provide, watch, computed } from 'vue'
 import Header from './components/Header.vue'
 import Drawer from './components/Drawer.vue'
 
-/* Корзина (START) */
 const cart = ref([])
 const drawerOpen = ref(false)
 
@@ -45,17 +44,18 @@ provide('cart', {
   removeFromCart
 })
 
-/* Корзина (END) */
 </script>
 
 <template>
-  <Drawer v-if="drawerOpen" :total-price="totalPrice" :vat-price="vatPrice" />
+  <div>
+    <Drawer v-if="drawerOpen" :total-price="totalPrice" :vat-price="vatPrice" />
 
-  <div class="bg-white w-4/5 m-auto rounded-xl shadow-xl mt-14">
-    <Header :total-price="totalPrice" @open-drawer="openDrawer" />
+    <div class="bg-white w-4/5 m-auto rounded-xl shadow-xl mt-14">
+      <Header :total-price="totalPrice" @open-drawer="openDrawer" />
 
-    <div class="p-10">
-      <router-view></router-view>
+      <div class="p-10 mb-10">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>

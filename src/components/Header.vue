@@ -1,9 +1,23 @@
 <script setup>
+import Modal from './Modal.vue'
+import { ref } from 'vue'
+const isModalOpen = ref(false)
+const userLogin = ref('Профиль') // Начальное значение
+// Method to toggle the modal
+function toggleModal() {
+  isModalOpen.value = !isModalOpen.value
+}
+
 defineProps({
   totalPrice: Number
 })
 
 const emit = defineEmits(['openDrawer'])
+
+function handleLoginSuccess(login) {
+  userLogin.value = login;
+  isModalOpen.value = false; // Закрыть модальное окно после успешного входа
+}
 </script>
 
 <template>
@@ -12,7 +26,7 @@ const emit = defineEmits(['openDrawer'])
       ><div class="flex items-center gap-4">
         <img src="/logo.png" alt="Logo" class="w-10" />
         <div>
-          <h2 class="text-xl font-bold uppercase">Vue Sneakers</h2>
+          <h2 class="text-xl font-bold uppercase">Sneakers</h2>
           <p class="text-slate-400">Магазин лучших кроссовок</p>
         </div>
       </div></router-link
@@ -34,10 +48,14 @@ const emit = defineEmits(['openDrawer'])
         </li>
       </router-link>
 
-      <li class="flex items-center cursor-pointer gap-3 text-gray-500 hover:text-black">
+      <li
+        @click="toggleModal"
+        class="flex items-center cursor-pointer gap-3 text-gray-500 hover:text-black"
+      >
         <img src="/profile.svg" alt="Cart" />
-        <span>Профиль</span>
+        <span>{{ userLogin }}</span>
       </li>
     </ul>
+    <Modal v-if="isModalOpen" @close="toggleModal" @loginSuccess="handleLoginSuccess"> </Modal>
   </header>
 </template>

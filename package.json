@@ -13,6 +13,7 @@
     "@formkit/auto-animate": "^0.8.0",
     "axios": "^1.5.1",
     "lodash.debounce": "^4.0.8",
+    "usemodal-vue3": "^0.3.7",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
   },
